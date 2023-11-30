@@ -1,6 +1,7 @@
 ﻿using System;
 
 
+
 class Program
 
 {
@@ -16,12 +17,15 @@ class Program
         int bombCount = 15;
 
 
+
         char[,] board = InitializeBoard(width, height, bombCount);
 
         char[,] displayBoard = InitializeDisplayBoard(width, height);
 
 
+
         bool gameOver = false;
+
 
 
         while (!gameOver)
@@ -31,9 +35,11 @@ class Program
             DisplayBoard(displayBoard);
 
 
+
             Console.WriteLine("Podaj współrzędne (x, y) do odkrycia (np. 2 3): ");
 
             string[] input = Console.ReadLine().Split(' ');
+
 
 
             if (input.Length == 2 && int.TryParse(input[0], out int x) && int.TryParse(input[1], out int y))
@@ -63,7 +69,8 @@ class Program
                         displayBoard[y, x] = count.ToString()[0];
 
 
-                        if (count /*??*/ 0)
+
+                        if (count == 0)
 
                         {
 
@@ -72,6 +79,7 @@ class Program
                             ExpandZeros(board, displayBoard, x, y);
 
                         }
+
 
 
                         if (CheckWin(displayBoard, bombCount))
@@ -111,13 +119,15 @@ class Program
     }
 
 
+
     static char[,] InitializeBoard(int width, int height, int bombCount)
 
     {
 
         char[,] board = new char[height, width];
 
-        Random random = /*??*/
+        Random random = new Random();
+
 
 
         // Wypełnij planszę bombami.
@@ -139,9 +149,11 @@ class Program
             } while (board[y, x] == '*');
 
 
+
             board[y, x] = '*';
 
         }
+
 
 
         return board;
@@ -149,11 +161,13 @@ class Program
     }
 
 
+
     static char[,] InitializeDisplayBoard(int width, int height)
 
     {
 
         char[,] displayBoard = new char[height, width];
+
 
 
         // Wypełnij planszę niewidocznymi polami.
@@ -173,10 +187,11 @@ class Program
         }
 
 
-        /*??*/
-        displayBoard;
+
+        return displayBoard;
 
     }
+
 
 
     static void DisplayBoard(char[,] board)
@@ -188,6 +203,7 @@ class Program
         int height = board.GetLength(0);
 
         int width = board.GetLength(1);
+
 
 
         Console.WriteLine("Plansza Saper:");
@@ -203,6 +219,7 @@ class Program
         }
 
         Console.WriteLine();
+
 
 
         for (int i = 0; i < height; i++)
@@ -226,6 +243,7 @@ class Program
     }
 
 
+
     static int CountAdjacentBombs(char[,] board, int x, int y)
 
     {
@@ -237,12 +255,12 @@ class Program
         int width = board.GetLength(1);
 
 
+
         for (int i = Math.Max(0, y - 1); i <= Math.Min(height - 1, y + 1); i++)
 
         {
 
-            for (int j = Math.Max(0, x - 1); j <= /*??*/(width - 1, x + 1); j++)
-
+            for (int j = Math.Max(0, x - 1); j <= Math.Min(width - 1, x + 1); j++)
             {
 
                 if (board[i, j] == '*')
@@ -258,9 +276,11 @@ class Program
         }
 
 
+
         return count;
 
     }
+
 
 
     static void ExpandZeros(char[,] board, char[,] displayBoard, int x, int y)
@@ -270,6 +290,7 @@ class Program
         int height = board.GetLength(0);
 
         int width = board.GetLength(1);
+
 
 
         for (int i = Math.Max(0, y - 1); i <= Math.Min(height - 1, y + 1); i++)
@@ -285,6 +306,7 @@ class Program
                 {
 
                     displayBoard[i, j] = CountAdjacentBombs(board, j, i).ToString()[0];
+
 
 
                     if (displayBoard[i, j] == '0')
@@ -304,6 +326,7 @@ class Program
     }
 
 
+
     static bool CheckWin(char[,] displayBoard, int bombCount)
 
     {
@@ -313,6 +336,7 @@ class Program
         int width = displayBoard.GetLength(1);
 
         int height = displayBoard.GetLength(0);
+
 
 
         for (int i = 0; i < height; i++)
@@ -336,7 +360,8 @@ class Program
         }
 
 
-        return uncoveredCount == /* ??*/ *height - bombCount;
+
+        return uncoveredCount == width * height - bombCount;
 
     }
 
